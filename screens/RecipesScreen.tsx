@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Recipe } from "../data/recipes";
-import RecipeGridCard from "../components/RecipeGridCard";
-import RecipeListCard from "../components/RecipeListCard";
+import RecipeGridCard from "../components/RecipeListCard";
+import RecipeListCard from "../components/RecipeGridCard";
 import { useTheme } from "../theme/ThemeContext";
 import { View, Pressable, Text, TextInput } from "react-native";
 import Svg, { Circle, Line, Path, Rect } from "react-native-svg";
@@ -25,15 +25,12 @@ export default function RecipesScreen({ recipes, onSelect, onAdd }: Props) {
   return (
     <View style={{ paddingTop: 16, backgroundColor: colors.bg, flex: 1 }}>
       <View>
-        <View style={{ flex: 1, flexDirection: "row", justifyContent: "center", alignItems: "center"}}>
-          <Text style={{ paddingLeft: 25,fontSize: 24, color: colors.muted, letterSpacing: 1.5, fontWeight: 500 }}>MY KITCHEN</Text>
+        <View style={{ flex: 1, flexDirection: "row", justifyContent: "center", alignItems: "center", paddingTop: 20, paddingLeft: 20, paddingBottom: 20}}>
+          <View>
+            <Text style={{ margin: 0, fontSize: 12, color: colors.muted, letterSpacing: 1.5, textTransform: "uppercase", fontWeight: 500 }}>My Kitchen</Text>
+            <Text style={{ marginTop: 2, fontSize: 28, fontFamily: "'Fraunces', serif", fontWeight: 400, color: "#1A1410" }}>Recipes</Text>
+          </View>
           <View style={{ flex: 1, flexDirection: "column", justifyContent: "flex-end", alignItems: "flex-end", paddingRight: 25}}>
-            <Pressable
-              onPress={() => setView(view === "grid" ? "list" : "grid")}
-              style={{ width: 36, height: 36, borderRadius: 10, borderWidth: 1, borderColor: colors.border, backgroundColor: "#FFFFFF",  alignItems: "center", justifyContent: "center", cursor: "pointer" }}
-            >
-              {view === "grid" ? <ListIcon color={colors.textSoft} /> : <GridIcon color={colors.textSoft} />}
-            </Pressable>
             <Pressable
               onPress={onAdd}
               style={{ width: 36, height: 36, borderRadius: 10, backgroundColor: colors.primary, borderWidth: 0,  alignItems: "center", justifyContent: "center", cursor: "pointer" }}
@@ -53,20 +50,11 @@ export default function RecipesScreen({ recipes, onSelect, onAdd }: Props) {
             style={{ backgroundColor: "none", borderWidth: 0, flex: 1, fontSize: 14, color: "#1A1410", fontFamily: "'Outfit', sans-serif" }}
           />
       </View>
-
-      {view === "grid" ? (
-        <View style={{  flexDirection: "column", gap: 10, paddingLeft: 20, paddingRight: 20 }}>
-          {filtered.map((r) => (
-            <RecipeGridCard key={r.id} recipe={r} onSelect={() => onSelect(r)} colors={colors} />
-          ))}
-        </View>
-      ) : (
-        <View style={{  flexDirection: "column", gap: 10, paddingLeft: 20, paddingRight: 20 }}>
-          {filtered.map((r) => (
-            <RecipeListCard key={r.id} recipe={r} onSelect={() => onSelect(r)} colors={colors} />
-          ))}
-        </View>
-      )}
+      <View style={{  flexDirection: "column", gap: 10, paddingLeft: 20, paddingRight: 20, paddingTop: 20 }}>
+        {filtered.map((r) => (
+          <RecipeGridCard key={r.id} recipe={r} onSelect={() => onSelect(r)} colors={colors} />
+        ))}
+      </View>
 
       {filtered.length === 0 && (
         <View style={{ paddingTop: 40, paddingBottom: 40, paddingLeft: 20, paddingRight: 20 }}>

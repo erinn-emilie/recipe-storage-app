@@ -93,7 +93,7 @@ export default function RecipeDetailScreen({ recipe, onBack }: Props) {
 
       {tab === "cook" && (
         <View>
-          <View style={{ padding: "20px 20px 0" }}>
+          <View style={{ paddingTop: 20, paddingLeft: 20, paddingRight: 20 }}>
             <Text style={{ margin: 16, fontSize: 13, color: colors.muted, letterSpacing: 1.5, textTransform: "uppercase", fontWeight: 600 }}>Ingredients</Text>
             {recipe.ingredients.map((ing, i) => (
               <Pressable key={i} onPress={() => toggleIngredient(i)} style={{  alignItems: "center", gap: 12, paddingTop: 9, paddingBottom: 9, paddingLeft: 9, paddingRight: 15, flexDirection: "row", borderBottomWidth: 1, borderBottomColor: colors.border, cursor: "pointer", opacity: checkedIngredients.includes(i) ? 0.4 : 1 }}>

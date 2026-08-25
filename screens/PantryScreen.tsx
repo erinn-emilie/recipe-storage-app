@@ -50,27 +50,27 @@ export default function PantryScreen() {
 
   return (
     <View style={{ backgroundColor: colors.bg, minHeight: "100%" }}>
-      <View style={{ paddingTop: 16, paddingLeft: 20, paddingRight: 20, paddingBottom: 12, justifyContent: "space-between", alignItems: "flex-end" }}>
+      <View style={{ paddingTop: 50, paddingLeft: 20, paddingRight: 20, paddingBottom: 12, justifyContent: "space-between", alignItems: "flex-end", flexDirection: "row" }}>
         <View>
-          <Text style={{ margin: 0, fontSize: 12, color: colors.muted, letterSpacing: 1.5, textTransform: "uppercase", fontWeight: 500 }}>At Home</Text>
-          <Text style={{ margin: "2px 0 0", fontSize: 28, fontFamily: "'Fraunces', serif", fontWeight: 400, color: "#1A1410" }}>Pantry</Text>
-        </View>
+          <Text style={{ margin: 0, fontFamily: "'Fraunces', serif", fontWeight: 400, fontSize: 12, color: colors.muted, letterSpacing: 1.5, textTransform: "uppercase"}}>At Home</Text>
+          <Text style={{ marginTop: 2, fontSize: 28, fontFamily: "'Fraunces', serif", fontWeight: 400, color: "#1A1410" }}>Pantry</Text>
+        </View>  
         <Pressable onPress={() => setShowAddForm(true)} style={{ width: 36, height: 36, borderRadius: 10, backgroundColor: colors.primary, borderWidth: 0, alignItems: "center", justifyContent: "center", cursor: "pointer" }}>
           <Svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FAF7F2" strokeWidth={2.5}><Line x1="12" y1="5" x2="12" y2="19"/><Line x1="5" y1="12" x2="19" y2="12"/></Svg>
         </Pressable>
       </View>
 
       {lowItems.length > 0 && (
-        <View style={{ margin: "0 20px 14px", backgroundColor: `${colors.accent}18`, borderWidth: 1, borderColor: colors.accent, borderRadius: 14, paddingTop: 12, paddingBottom: 12, paddingLeft: 14, paddingRight: 14 }}>
+        <View style={{ marginLeft: 20, marginRight: 20, marginBottom: 14, backgroundColor: `${colors.accent}18`, borderWidth: 1, borderColor: colors.accent, borderRadius: 14, paddingTop: 12, paddingBottom: 12, paddingLeft: 14, paddingRight: 14 }}>
           <Text style={{ margin: 0, fontSize: 11, color: colors.accent, fontWeight: 600, letterSpacing: 0.5, textTransform: "uppercase" }}>Running Low</Text>
-          <Text style={{ margin: "4px 0 0", fontSize: 13, color: colors.textSoft }}>{lowItems.map((i) => i.name).join(", ")}</Text>
+          <Text style={{ marginTop: 4, fontSize: 13, color: colors.textSoft }}>{lowItems.map((i) => i.name).join(", ")}</Text>
         </View>
       )}
   
       <View>
         <ScrollView style={{ gap: 8, paddingLeft: 20, paddingRight: 20, paddingBottom: 14 }}>
           {CATEGORIES.map((c) => (
-            <Pressable key={c} onPress={() => setActiveCategory(c)} style={{ padding: "6px 14px", borderRadius: 20, borderWidth: activeCategory === c ? 0 : 1, borderColor: activeCategory === c ? "transparent" : colors.border, backgroundColor: activeCategory === c ? colors.primary : "#FFFFFF",  cursor: "pointer" }}>
+            <Pressable key={c} onPress={() => setActiveCategory(c)} style={{ paddingTop: 6, paddingBottom: 6, paddingLeft: 14, paddingRight: 14, borderRadius: 20, borderWidth: activeCategory === c ? 0 : 1, borderColor: activeCategory === c ? "transparent" : colors.border, backgroundColor: activeCategory === c ? colors.primary : "#FFFFFF",  cursor: "pointer" }}>
               <Text style={{ color: activeCategory === c ? "#FAF7F2" : colors.textSoft, fontSize: 12, fontWeight: 500, fontFamily: "'Outfit', sans-serif"}}>{c}</Text>
             </Pressable>
           ))}
@@ -79,16 +79,16 @@ export default function PantryScreen() {
 
       <View style={{ paddingLeft: 20, paddingRight: 20 }}>
         {filtered.map((item) => (
-          <View key={item.id} style={{ backgroundColor: "#FFFFFF", borderRadius: 14, paddingTop: 12, paddingBottom: 12, paddingLeft: 14, paddingRight: 14, marginBottom: 8, alignItems: "center", gap: 12, boxShadow: "0 1px 3px rgba(0,0,0,0.04)" }}>
-            <View style={{ width: 36, height: 36, borderRadius: 10, backgroundColor: isLow(item) ? `${colors.accent}18` : `${colors.primary}10`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+          <View key={item.id} style={{ flexDirection: "row", backgroundColor: "#FFFFFF", borderRadius: 14, paddingTop: 12, paddingBottom: 12, paddingLeft: 14, paddingRight: 14, marginBottom: 8, alignItems: "center", justifyContent: "center", gap: 12, boxShadow: "0 1px 3px rgba(0,0,0,0.04)" }}>
+            <View style={{ width: 36, height: 36, borderRadius: 10, backgroundColor: isLow(item) ? `${colors.accent}18` : `${colors.primary}10`, alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
               <Text style={{ fontSize: 18 }}>{getCategoryEmoji(item.category)}</Text>
             </View>
-            <View style={{ flex: 1 }}>
-              <View style={{ display: "flex", alignItems: "center", gap: 6 }}>
+            <View style={{ flex: 1, flexDirection: "row" }}>
+              <View style={{ alignItems: "center", justifyContent: "center", gap: 6, marginRight: 20 }}>
                 <Text style={{ margin: 0, fontSize: 14, fontWeight: 500, color: "#1A1410" }}>{item.name}</Text>
                 {isLow(item) && <Text style={{ fontSize: 9, backgroundColor: colors.accent, color: "#FFFFFF", borderRadius: 6, paddingTop: 2, paddingBottom: 2, paddingLeft: 6, paddingRight: 6, fontWeight: 600, letterSpacing: 0.3 }}>LOW</Text>}
+                <Text style={{ marginTop: 2, fontSize: 11, color: colors.muted }}>{item.category}</Text>
               </View>
-              <Text style={{ margin: "2px 0 0", fontSize: 11, color: colors.muted }}>{item.category}</Text>
             </View>
             <Text style={{ margin: 0, fontSize: 15, fontWeight: 600, color: isLow(item) ? colors.accent : colors.primary }}>{item.amount}{item.unit ? ` ${item.unit}` : ""}</Text>
             <Pressable onPress={() => removeItem(item.id)} style={{ backgroundColor: "none", borderWidth: 0, cursor: "pointer", paddingLeft: 4, paddingRight: 4 }}>
@@ -100,9 +100,9 @@ export default function PantryScreen() {
 
       {showAddForm && (
         <View style={{ position: "absolute", inset: 0, backgroundColor: "rgba(26,20,16,0.6)", alignItems: "flex-end", zIndex: 50 }}>
-          <View style={{ backgroundColor: colors.bg, borderRadius: "24px 24px 0 0", width: "100%", padding: "24px 20px 32px" }}>
-            <View style={{ display: "flex", justifyContent: "space-between", marginBottom: 20 }}>
-              <h2 style={{ margin: 0, fontSize: 20, fontFamily: "'Fraunces', serif", fontWeight: 400, color: "#1A1410" }}>Add Ingredient</h2>
+          <View style={{ backgroundColor: colors.bg, borderBottomLeftRadius: 24, borderBottomRightRadius: 24, width: "100%", paddingTop: 24, paddingBottom: 32, paddingLeft: 20, paddingRight: 20 }}>
+            <View style={{ display: "flex", justifyContent: "space-between", marginBottom: 20, flexDirection: "row" }}>
+              <Text style={{ margin: 0, fontSize: 20, fontFamily: "'Fraunces', serif", fontWeight: 400, color: "#1A1410" }}>Add Ingredient</Text>
               <Pressable onPress={() => setShowAddForm(false)} style={{ backgroundColor: "none", borderWidth: 0, cursor: "pointer" }}>
                 <Text style={{fontSize: 22, color: colors.muted}}>x</Text>
               </Pressable>
@@ -116,7 +116,7 @@ export default function PantryScreen() {
               <Text style={{ marginBottom: 6, fontSize: 12, color: colors.muted, fontWeight: 500, letterSpacing: 0.3 }}>CATEGORY</Text>
               <View style={{ flexWrap: "wrap", gap: 7 }}>
                 {CATEGORIES.slice(1).map((c) => (
-                  <Pressable key={c} onPress={() => setNewItem((p) => ({ ...p, category: c }))} style={{ padding: "6px 12px", borderRadius: 12, borderWidth: newItem.category === c ? 0 : 1, borderColor: newItem.category === c ? "none" : colors.border, backgroundColor: newItem.category === c ? colors.primary : "#FFFFFF", cursor: "pointer" }}>
+                  <Pressable key={c} onPress={() => setNewItem((p) => ({ ...p, category: c }))} style={{ paddingTop: 6, paddingBottom: 6, paddingLeft: 12, paddingRight: 12, borderRadius: 12, borderWidth: newItem.category === c ? 0 : 1, borderColor: newItem.category === c ? "none" : colors.border, backgroundColor: newItem.category === c ? colors.primary : "#FFFFFF", cursor: "pointer" }}>
                     <Text style={{color: newItem.category === c ? "#FAF7F2" : colors.textSoft, fontSize: 12, fontFamily: "'Outfit', sans-serif"}}>{c}</Text>
                   </Pressable>
                 ))}

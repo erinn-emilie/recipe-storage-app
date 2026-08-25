@@ -76,11 +76,11 @@ export default function MemoriesScreen() {
   return (
     <View style={{ backgroundColor: colors.bg, minHeight: "100%" }}>
       {/* Header */}
-      <View style={{ paddingTop: 16, paddingLeft: 20, paddingRight: 20 }}>
+      <View style={{ paddingTop: 16, paddingLeft: 20, paddingRight: 20, marginTop: 30 }}>
         <Text style={{ margin: 0, fontSize: 12, color: colors.muted, letterSpacing: 1.5, textTransform: "uppercase", fontWeight: 500 }}>
           {tab === "journal" ? "What I've Made" : "Account"}
         </Text>
-        <View style={{ justifyContent: "space-between", alignItems: "flex-end" }}>
+        <View style={{ justifyContent: "space-between", alignItems: "flex-end", flexDirection: "row" }}>
           <Text style={{ marginTop: 2, fontSize: 28, fontFamily: "'Fraunces', serif", fontWeight: 400, color: "#1A1410" }}>
             {tab === "journal" ? "Meal Journal" : "Settings"}
           </Text>
@@ -106,7 +106,7 @@ export default function MemoriesScreen() {
 
       {/* ── JOURNAL TAB ── */}
       {tab === "journal" && (
-        <View style={{ padding: "16px 20px" }}>
+        <View style={{ paddingTop: 16, paddingBottom: 16, paddingLeft: 20, paddingRight: 20 }}>
           {memories.map((memory) => (
             <Pressable
               key={memory.id}
@@ -119,14 +119,14 @@ export default function MemoriesScreen() {
                 <View style={{ position: "absolute", bottom: 12, left: 14, right: 14,  justifyContent: "space-between", alignItems: "flex-end" }}>
                   <View>
                     <Text style={{ margin: 0, fontSize: 17, fontFamily: "'Fraunces', serif", fontWeight: 400, color: "#FFFFFF" }}>{memory.title}</Text>
-                    <Text style={{ margin: "2px 0 0", fontSize: 11, color: "rgba(250,247,242,0.8)" }}>{memory.date} · Chef: {memory.chef}</Text>
+                    <Text style={{ marginTop: 2, fontSize: 11, color: "rgba(250,247,242,0.8)" }}>{memory.date} · Chef: {memory.chef}</Text>
                   </View>
                   <StarRating rating={memory.rating} size={13} />
                 </View>
               </View>
               {expanded === memory.id && (
-                <View style={{ padding: "14px" }}>
-                  <Text style={{ margin: "0 0 12px", fontSize: 13, color: colors.textSoft, fontStyle: "italic", fontFamily: "'Fraunces', serif" }}>"{memory.notes}"</Text>
+                <View style={{ padding: 14 }}>
+                  <Text style={{ marginBottom: 12, fontSize: 13, color: colors.textSoft, fontStyle: "italic", fontFamily: "'Fraunces', serif" }}>"{memory.notes}"</Text>
                   {memory.friendRatings.length > 0 && (
                     <View style={{ borderTopWidth: 1, borderTopColor: colors.border,paddingTop: 10 }}>
                       <Text style={{ marginBottom: 8, fontSize: 10, color: colors.muted, letterSpacing: 1.2, textTransform: "uppercase", fontWeight: 600 }}>Friend Ratings</Text>
@@ -139,7 +139,7 @@ export default function MemoriesScreen() {
                     </View>
                   )}
                   <View style={{  gap: 8, marginTop: 12 }}>
-                    <Pressable style={{ flex: 1, backgroundColor: `${colors.primary}12`, borderWidth: 0, borderRadius: 10, padding: "9px", cursor: "pointer"}}>
+                    <Pressable style={{ flex: 1, backgroundColor: `${colors.primary}12`, borderWidth: 0, borderRadius: 10, padding: 9, cursor: "pointer"}}>
                       <Text style={{fontSize: 12, fontWeight: 600, color: colors.primary, fontFamily: "'Outfit', sans-serif"}}>Edit</Text>
                     </Pressable>
                     <Pressable style={{ flex: 1, backgroundColor: `${colors.primary}12`, borderWidth: 0, borderRadius: 10, padding: 9, cursor: "pointer"}}>
@@ -155,7 +155,7 @@ export default function MemoriesScreen() {
 
       {/* ── SETTINGS TAB ── */}
       {tab === "settings" && (
-        <View style={{ padding: "16px 20px 32px", backgroundColor: colors.bg }}>
+        <View style={{ paddingTop: 16, paddingBottom: 32, paddingLeft: 20, paddingRight : 20, backgroundColor: colors.bg }}>
 
           {/* Profile avatar */}
           <View style={{  flexDirection: "column", alignItems: "center", paddingTop: 12, paddingBottom: 20 }}>
@@ -199,14 +199,14 @@ export default function MemoriesScreen() {
           {/* Friend Code */}
           <SectionLabel colors={colors}>Friends</SectionLabel>
           <SettingsCard colors={colors}>
-            <View style={{ padding: "4px 0" }}>
+            <View style={{ paddingTop: 4, paddingBottom: 4 }}>
               <Text style={{ marginBottom: 6, fontSize: 12, color: colors.muted, fontWeight: 500 }}>Your Friend Code</Text>
               <Text style={{ marginBottom: 10, fontSize: 13, color: colors.textSoft }}>
                 Share this code with people you know so they can add you. Only friends you've approved can see your recipes.
               </Text>
               <View style={{  alignItems: "center", gap: 10 }}>
                 <View style={{ flex: 1, backgroundColor: `${colors.primary}10`, borderRadius: 12, paddingTop: 12, paddingBottom: 12, paddingLeft: 14, paddingRight: 14, alignItems: "center", gap: 8 }}>
-                  <Svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={colors.primary} strokeWidth={2}><Path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><Circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></Svg>
+                  <Svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={colors.primary} strokeWidth={2}><Path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><Circle cx="9" cy="7" r="4"/><Line x1="19" y1="8" x2="19" y2="14"/><Line x1="22" y1="11" x2="16" y2="11"/></Svg>
                   <Text style={{ fontSize: 16, fontWeight: 700, color: colors.primary, letterSpacing: 2, fontFamily: "'Outfit', sans-serif" }}>{friendCode}</Text>
                 </View>
                 <Pressable onPress={copyFriendCode} style={{ paddingTop: 12, paddingBottom: 12, paddingLeft: 16, paddingRight: 16, backgroundColor: codeCopied ? colors.primary : "#FFFFFF", borderWidth: 1, borderColor: colors.border, borderRadius: 12, cursor: "pointer" }}>
@@ -225,7 +225,7 @@ export default function MemoriesScreen() {
                 <Pressable
                   key={id}
                   onPress={() => setThemeId(id)}
-                  style={{ backgroundColor: t.colors.bg, borderWidth: 2, borderColor: themeId === id ? t.colors.primary : colors.border, borderRadius: 14, padding: "12px", cursor: "pointer", position: "relative" }}
+                  style={{ backgroundColor: t.colors.bg, borderWidth: 2, borderColor: themeId === id ? t.colors.primary : colors.border, borderRadius: 14, padding: 12, cursor: "pointer", position: "relative" }}
                 >
                   <View style={{  gap: 5, marginBottom: 8 }}>
                     {t.preview.map((color, i) => (
@@ -246,11 +246,11 @@ export default function MemoriesScreen() {
           {/* Account Actions */}
           <SectionLabel colors={colors}>Account Actions</SectionLabel>
           <SettingsCard colors={colors}>
-            <Pressable style={{ width: "100%", backgroundColor: "none", borderWidth: 0, padding: "12px 0", cursor: "pointer"}}>
+            <Pressable style={{ width: "100%", backgroundColor: "none", borderWidth: 0, paddingTop: 12, paddingBottom: 12, cursor: "pointer"}}>
               <Text style={{textAlign: "left", fontSize: 14, color: colors.accent, fontWeight: 500, fontFamily: "'Outfit', sans-serif" }}>Sign Out</Text>
             </Pressable>
             <Divider colors={colors} />
-            <Pressable style={{ width: "100%", backgroundColor: "none", borderWidth: 0, padding: "12px 0", cursor: "pointer"}}>
+            <Pressable style={{ width: "100%", backgroundColor: "none", borderWidth: 0, paddingTop: 12, paddingBottom: 12, cursor: "pointer"}}>
               <Text style={{textAlign: "left", fontSize: 14, color: "#B03020", fontWeight: 500, fontFamily: "'Outfit', sans-serif" }}>Delete Account</Text>
             </Pressable>
           </SettingsCard>
@@ -261,7 +261,7 @@ export default function MemoriesScreen() {
       {/* Add memory modal */}
       {showAddMemory && (
         <View style={{ position: "absolute", inset: 0, backgroundColor: "rgba(26,20,16,0.6)",  alignItems: "flex-end", zIndex: 50 }}>
-          <View style={{ backgroundColor: colors.bg, borderRadius: "24px 24px 0 0", width: "100%", padding: "24px 20px 32px" }}>
+          <View style={{ backgroundColor: colors.bg, borderRadius: "24px 24px 0 0", width: "100%", paddingTop: 24, paddingBottom: 32, paddingLeft: 20, paddingRight: 20 }}>
             <View style={{  justifyContent: "space-between", marginBottom: 20 }}>
               <Text style={{ margin: 0, fontSize: 20, fontFamily: "'Fraunces', serif", fontWeight: 400, color: "#1A1410" }}>Log a Memory</Text>
               <Pressable onPress={() => setShowAddMemory(false)} style={{ backgroundColor: "none", borderWidth: 0, cursor: "pointer"}}>
@@ -274,15 +274,15 @@ export default function MemoriesScreen() {
             </View>
             {["Meal Name", "Chef", "Notes"].map((field) => (
               <View key={field} style={{ marginBottom: 14 }}>
-                <Text style={{ margin: "0 0 6px", fontSize: 12, color: colors.muted, fontWeight: 500, letterSpacing: 0.3 }}>{field.toUpperCase()}</Text>
+                <Text style={{ marginBottom: 6, fontSize: 12, color: colors.muted, fontWeight: 500, letterSpacing: 0.3 }}>{field.toUpperCase()}</Text>
                 <TextInput placeholder={`Enter ${field.toLowerCase()}...`} style={{ width: "100%", backgroundColor: "#FFFFFF", borderWidth: 1, borderColor: colors.border, borderRadius: 12, paddingTop: 11, paddingBottom: 11, paddingLeft: 14, paddingRight: 14, fontSize: 14, color: "#1A1410", fontFamily: "'Outfit', sans-serif", boxSizing: "border-box" }} />
               </View>
             ))}
             <View style={{ marginBottom: 16 }}>
-              <Text style={{ margin: "0 0 8px", fontSize: 12, color: colors.muted, fontWeight: 500, letterSpacing: 0.3 }}>YOUR RATING</Text>
+              <Text style={{ marginBottom: 8, fontSize: 12, color: colors.muted, fontWeight: 500, letterSpacing: 0.3 }}>YOUR RATING</Text>
               <StarRating rating={0} size={28} interactive />
             </View>
-            <Pressable style={{ width: "100%", backgroundColor: colors.primary, borderWidth: 0, borderRadius: 14, padding: "14px", cursor: "pointer" }}>
+            <Pressable style={{ width: "100%", backgroundColor: colors.primary, borderWidth: 0, borderRadius: 14, padding: 14, cursor: "pointer" }}>
               <Text style={{color: "#FAF7F2", fontSize: 16, fontWeight: 600, fontFamily: "'Outfit', sans-serif"}}>Save Memory</Text>
             </Pressable>
           </View>
@@ -296,7 +296,7 @@ export default function MemoriesScreen() {
 
 function SectionLabel({ children, colors }: { children: React.ReactNode; colors: any }) {
   return (
-    <Text style={{ margin: "20px 0 6px", fontSize: 11, color: colors.muted, letterSpacing: 1.4, textTransform: "uppercase", fontWeight: 600 }}>
+    <Text style={{ marginTop: 20, marginBottom: 6, fontSize: 11, color: colors.muted, letterSpacing: 1.4, textTransform: "uppercase", fontWeight: 600 }}>
       {children}
     </Text>
   );
@@ -304,7 +304,7 @@ function SectionLabel({ children, colors }: { children: React.ReactNode; colors:
 
 function SettingsCard({ children, colors }: { children: React.ReactNode; colors: any }) {
   return (
-    <View style={{ backgroundColor: "#FFFFFF", borderRadius: 16, padding: "4px 16px", borderWidth: 1, borderColor: colors.border }}>
+    <View style={{ backgroundColor: "#FFFFFF", borderRadius: 16, paddingTop: 4, paddingBottom: 4, paddingLeft: 16, paddingRight: 16, borderWidth: 1, borderColor: colors.border }}>
       {children}
     </View>
   );
