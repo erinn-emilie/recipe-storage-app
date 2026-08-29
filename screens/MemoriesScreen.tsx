@@ -1,8 +1,11 @@
 import { useState } from "react";
 import StarRating from "../components/StarRating";
-import { useTheme, THEMES, ThemeId } from "../theme/ThemeContext";
+import { useTheme } from "../theme/ThemeContext";
 import { View, Pressable, Text, TextInput, Image } from "react-native";
-import Svg, { Path, Line, Polyline, Circle, Rect } from "react-native-svg";
+import Svg, { Line, Polyline, Circle, Rect } from "react-native-svg";
+
+import SettingsCard from "../components/Settings/SettingsCard";
+import MemoryCard from "../components/MemoryCard";
 
 interface Memory {
   id: string;
@@ -47,31 +50,16 @@ const memories: Memory[] = [
     image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800&h=500&fit=crop&auto=format",
     notes: "The cucumber salad alongside grilled chicken. Done in 20 minutes. Marcus had never had it before.",
     rating: 4,
-    friendRatings: [],
+    friendRatings: [{ name: "Priya K.", rating: 5 }],
   },
 ];
 
 
 export default function MemoriesScreen() {
-  const { colors, themeId, setThemeId } = useTheme();
+  const { colors } = useTheme();
   const [tab, setTab] = useState<"journal" | "settings">("journal");
   const [showAddMemory, setShowAddMemory] = useState(false);
-  const [expanded, setExpanded] = useState<string | null>(null);
 
-  // Settings state
-  const [name, setName] = useState("Jordan Lee");
-  const [email, setEmail] = useState("jordan@email.com");
-  const [editingField, setEditingField] = useState<string | null>(null);
-  const [friendCode] = useState("DISH-4827");
-  const [codeCopied, setCodeCopied] = useState(false);
-  const [showPasswordForm, setShowPasswordForm] = useState(false);
-  const [newPassword, setNewPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-
-  const copyFriendCode = () => {
-    setCodeCopied(true);
-    setTimeout(() => setCodeCopied(false), 2000);
-  };
 
   return (
     <View style={{ backgroundColor: colors.bg, minHeight: "100%" }}>
@@ -108,154 +96,14 @@ export default function MemoriesScreen() {
       {tab === "journal" && (
         <View style={{ paddingTop: 16, paddingBottom: 16, paddingLeft: 20, paddingRight: 20 }}>
           {memories.map((memory) => (
-            <Pressable
-              key={memory.id}
-              style={{ backgroundColor: "#FFFFFF", borderRadius: 18, overflow: "hidden", marginBottom: 14, boxShadow: "0 1px 4px rgba(0,0,0,0.06)", cursor: "pointer" }}
-              onPress={() => setExpanded(expanded === memory.id ? null : memory.id)}
-            >
-              <View style={{ position: "relative", height: expanded === memory.id ? 160 : 120, backgroundColor: "#E8E0D5" }}>
-                <Image src={memory.image} alt={memory.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-                <View style={{ position: "absolute", inset: 0, backgroundColor: "linear-gradient(to bottom, transparent 30%, rgba(0,0,0,0.55) 100%)" }} />
-                <View style={{ position: "absolute", bottom: 12, left: 14, right: 14,  justifyContent: "space-between", alignItems: "flex-end" }}>
-                  <View>
-                    <Text style={{ margin: 0, fontSize: 17, fontFamily: "'Fraunces', serif", fontWeight: 400, color: "#FFFFFF" }}>{memory.title}</Text>
-                    <Text style={{ marginTop: 2, fontSize: 11, color: "rgba(250,247,242,0.8)" }}>{memory.date} · Chef: {memory.chef}</Text>
-                  </View>
-                  <StarRating rating={memory.rating} size={13} />
-                </View>
-              </View>
-              {expanded === memory.id && (
-                <View style={{ padding: 14 }}>
-                  <Text style={{ marginBottom: 12, fontSize: 13, color: colors.textSoft, fontStyle: "italic", fontFamily: "'Fraunces', serif" }}>"{memory.notes}"</Text>
-                  {memory.friendRatings.length > 0 && (
-                    <View style={{ borderTopWidth: 1, borderTopColor: colors.border,paddingTop: 10 }}>
-                      <Text style={{ marginBottom: 8, fontSize: 10, color: colors.muted, letterSpacing: 1.2, textTransform: "uppercase", fontWeight: 600 }}>Friend Ratings</Text>
-                      {memory.friendRatings.map((fr) => (
-                        <View key={fr.name} style={{  justifyContent: "space-between", alignItems: "center", marginBottom: 6 }}>
-                          <Text style={{ fontSize: 13, color: "#1A1410" }}>{fr.name}</Text>
-                          <StarRating rating={fr.rating} size={12} />
-                        </View>
-                      ))}
-                    </View>
-                  )}
-                  <View style={{  gap: 8, marginTop: 12 }}>
-                    <Pressable style={{ flex: 1, backgroundColor: `${colors.primary}12`, borderWidth: 0, borderRadius: 10, padding: 9, cursor: "pointer"}}>
-                      <Text style={{fontSize: 12, fontWeight: 600, color: colors.primary, fontFamily: "'Outfit', sans-serif"}}>Edit</Text>
-                    </Pressable>
-                    <Pressable style={{ flex: 1, backgroundColor: `${colors.primary}12`, borderWidth: 0, borderRadius: 10, padding: 9, cursor: "pointer"}}>
-                      <Text style={{fontSize: 12, fontWeight: 600, color: colors.primary, fontFamily: "'Outfit', sans-serif"}}>Share</Text>
-                    </Pressable>
-                  </View>
-                </View>
-              )}
-            </Pressable>
+            <MemoryCard memory={memory}></MemoryCard>
           ))}
         </View>
       )}
 
       {/* ── SETTINGS TAB ── */}
       {tab === "settings" && (
-        <View style={{ paddingTop: 16, paddingBottom: 32, paddingLeft: 20, paddingRight : 20, backgroundColor: colors.bg }}>
-
-          {/* Profile avatar */}
-          <View style={{  flexDirection: "column", alignItems: "center", paddingTop: 12, paddingBottom: 20 }}>
-            <View style={{ width: 72, height: 72, borderRadius: 22, backgroundColor: colors.primary,  alignItems: "center", justifyContent: "center", marginBottom: 10 }}>
-              <Text style={{ fontSize: 26, fontWeight: 700, color: "#FAF7F2", fontFamily: "'Fraunces', serif" }}>JL</Text>
-            </View>
-            <Text style={{ margin: 0, fontSize: 18, fontWeight: 600, color: "#1A1410", fontFamily: "'Fraunces', serif" }}>{name}</Text>
-            <Text style={{ marginTop: 3, fontSize: 12, color: colors.muted }}>{email}</Text>
-          </View>
-
-          {/* Account section */}
-          <SectionLabel colors={colors}>Account</SectionLabel>
-          <SettingsCard colors={colors}>
-            <EditableField label="Name" value={name} editing={editingField === "name"} onEdit={() => setEditingField("name")} onChange={setName} onDone={() => setEditingField(null)} colors={colors} />
-            <Divider colors={colors} />
-            <EditableField label="Email" value={email} editing={editingField === "email"} onEdit={() => setEditingField("email")} onChange={setEmail} onDone={() => setEditingField(null)} type="email" colors={colors} />
-            <Divider colors={colors} />
-            <View style={{ padding: 13 }}>
-              <View style={{  justifyContent: "space-between", alignItems: "center" }}>
-                <Text style={{ fontSize: 14, color: "#1A1410" }}>Password</Text>
-                <Pressable onPress={() => setShowPasswordForm(!showPasswordForm)} style={{ backgroundColor: "none", borderWidth: 0, cursor: "pointer" }}>
-                  <Text style={{ fontSize: 13, color: colors.primary, fontWeight: 600, fontFamily: "'Outfit', sans-serif" }}>Change</Text>
-                </Pressable>
-              </View>
-              {showPasswordForm && (
-                <View style={{ marginTop: 12,  flexDirection: "column", gap: 10 }}>
-                  <TextInput secureTextEntry={true} placeholder="New password" value={newPassword} onChangeText={setNewPassword} style={{ width: "100%", backgroundColor: colors.bg, borderColor: colors.border, borderWidth: 1, borderRadius: 10, paddingTop: 10, paddingBottom: 10, paddingLeft: 12, paddingRight: 12, fontSize: 14, color: "#1A1410", fontFamily: "'Outfit', sans-serif", boxSizing: "border-box" }} />
-                  <TextInput  secureTextEntry={true} placeholder="Confirm password" value={confirmPassword} onChangeText={setConfirmPassword} style={{ width: "100%", backgroundColor: colors.bg, borderWidth: 1, borderColor: colors.border, borderRadius: 10, paddingTop: 10, paddingBottom: 10, paddingLeft: 12, paddingRight: 12, fontSize: 14, color: "#1A1410", fontFamily: "'Outfit', sans-serif", boxSizing: "border-box" }} />
-                  <View style={{  gap: 8 }}>
-                    <Pressable onPress={() => { setShowPasswordForm(false); setNewPassword(""); setConfirmPassword(""); }} style={{ flex: 1, backgroundColor: `${colors.primary}14`, borderWidth: 0, borderRadius: 10, padding: 9 }}>
-                      <Text style={{ fontSize: 13, fontWeight: 600, color: colors.textSoft, fontFamily: "'Outfit', sans-serif"}}></Text>Cancel</Pressable>
-                    <Pressable onPress={() => { setShowPasswordForm(false); setNewPassword(""); setConfirmPassword(""); }} style={{ flex: 1, backgroundColor: colors.primary, borderWidth: 0, borderRadius: 10, padding: 9, cursor: "pointer" }}>
-                      <Text style={{fontSize: 13, fontWeight: 600, color: "#FAF7F2",  fontFamily: "'Outfit', sans-serif"}}>Save</Text>
-                    </Pressable>
-                  </View>
-                </View>
-              )}
-            </View>
-          </SettingsCard>
-
-          {/* Friend Code */}
-          <SectionLabel colors={colors}>Friends</SectionLabel>
-          <SettingsCard colors={colors}>
-            <View style={{ paddingTop: 4, paddingBottom: 4 }}>
-              <Text style={{ marginBottom: 6, fontSize: 12, color: colors.muted, fontWeight: 500 }}>Your Friend Code</Text>
-              <Text style={{ marginBottom: 10, fontSize: 13, color: colors.textSoft }}>
-                Share this code with people you know so they can add you. Only friends you've approved can see your recipes.
-              </Text>
-              <View style={{  alignItems: "center", gap: 10 }}>
-                <View style={{ flex: 1, backgroundColor: `${colors.primary}10`, borderRadius: 12, paddingTop: 12, paddingBottom: 12, paddingLeft: 14, paddingRight: 14, alignItems: "center", gap: 8 }}>
-                  <Svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={colors.primary} strokeWidth={2}><Path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><Circle cx="9" cy="7" r="4"/><Line x1="19" y1="8" x2="19" y2="14"/><Line x1="22" y1="11" x2="16" y2="11"/></Svg>
-                  <Text style={{ fontSize: 16, fontWeight: 700, color: colors.primary, letterSpacing: 2, fontFamily: "'Outfit', sans-serif" }}>{friendCode}</Text>
-                </View>
-                <Pressable onPress={copyFriendCode} style={{ paddingTop: 12, paddingBottom: 12, paddingLeft: 16, paddingRight: 16, backgroundColor: codeCopied ? colors.primary : "#FFFFFF", borderWidth: 1, borderColor: colors.border, borderRadius: 12, cursor: "pointer" }}>
-                  <Text style={{ fontSize: 13, fontWeight: 600, color: codeCopied ? "#FAF7F2" : colors.primary, fontFamily: "'Outfit', sans-serif"}}>{codeCopied ? "Copied!" : "Copy"}</Text>
-                </Pressable>
-              </View>
-            </View>
-          </SettingsCard>
-
-          {/* Theme */}
-          <SectionLabel colors={colors}>Appearance</SectionLabel>
-          <SettingsCard colors={colors}>
-            <Text style={{ marginBottom: 12, fontSize: 12, color: colors.muted, fontWeight: 500 }}>App Theme</Text>
-            <View style={{ gap: 10 }}>
-              {(Object.entries(THEMES) as [ThemeId, typeof THEMES[ThemeId]][]).map(([id, t]) => (
-                <Pressable
-                  key={id}
-                  onPress={() => setThemeId(id)}
-                  style={{ backgroundColor: t.colors.bg, borderWidth: 2, borderColor: themeId === id ? t.colors.primary : colors.border, borderRadius: 14, padding: 12, cursor: "pointer", position: "relative" }}
-                >
-                  <View style={{  gap: 5, marginBottom: 8 }}>
-                    {t.preview.map((color, i) => (
-                      <View key={i} style={{ width: i === 0 ? 24 : 16, height: 24, borderRadius: 6, backgroundColor: color, borderWidth: 1, borderColor: "rgba(0,0,0,0.06)" }} />
-                    ))}
-                  </View>
-                  <Text style={{ margin: 0, fontSize: 13, fontWeight: 600, color: t.colors.primary, fontFamily: "'Outfit', sans-serif" }}>{t.label}</Text>
-                  {themeId === id && (
-                    <View style={{ position: "absolute", top: 8, right: 8, width: 18, height: 18, borderRadius: 9, backgroundColor: t.colors.primary,  alignItems: "center", justifyContent: "center" }}>
-                      <Svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" strokeWidth={3}><Polyline points="20 6 9 17 4 12"/></Svg>
-                    </View>
-                  )}
-                </Pressable>
-              ))}
-            </View>
-          </SettingsCard>
-
-          {/* Account Actions */}
-          <SectionLabel colors={colors}>Account Actions</SectionLabel>
-          <SettingsCard colors={colors}>
-            <Pressable style={{ width: "100%", backgroundColor: "none", borderWidth: 0, paddingTop: 12, paddingBottom: 12, cursor: "pointer"}}>
-              <Text style={{textAlign: "left", fontSize: 14, color: colors.accent, fontWeight: 500, fontFamily: "'Outfit', sans-serif" }}>Sign Out</Text>
-            </Pressable>
-            <Divider colors={colors} />
-            <Pressable style={{ width: "100%", backgroundColor: "none", borderWidth: 0, paddingTop: 12, paddingBottom: 12, cursor: "pointer"}}>
-              <Text style={{textAlign: "left", fontSize: 14, color: "#B03020", fontWeight: 500, fontFamily: "'Outfit', sans-serif" }}>Delete Account</Text>
-            </Pressable>
-          </SettingsCard>
-
-        </View>
+        <SettingsCard></SettingsCard>
       )}
 
       {/* Add memory modal */}
@@ -292,65 +140,3 @@ export default function MemoriesScreen() {
   );
 }
 
-// ── Helpers ──
-
-function SectionLabel({ children, colors }: { children: React.ReactNode; colors: any }) {
-  return (
-    <Text style={{ marginTop: 20, marginBottom: 6, fontSize: 11, color: colors.muted, letterSpacing: 1.4, textTransform: "uppercase", fontWeight: 600 }}>
-      {children}
-    </Text>
-  );
-}
-
-function SettingsCard({ children, colors }: { children: React.ReactNode; colors: any }) {
-  return (
-    <View style={{ backgroundColor: "#FFFFFF", borderRadius: 16, paddingTop: 4, paddingBottom: 4, paddingLeft: 16, paddingRight: 16, borderWidth: 1, borderColor: colors.border }}>
-      {children}
-    </View>
-  );
-}
-
-function Divider({ colors }: { colors: any }) {
-  return <View style={{ height: 1, backgroundColor: colors.border, marginLeft: -16, marginRight: -16 }} />;
-}
-
-function EditableField({
-  label, value, editing, onEdit, onChange, onDone, type = "text", colors,
-}: {
-  label: string;
-  value: string;
-  editing: boolean;
-  onEdit: () => void;
-  onChange: (v: string) => void;
-  onDone: () => void;
-  type?: string;
-  colors: any;
-}) {
-  return (
-    <View style={{ paddingTop: 13, paddingBottom: 13 }}>
-      <View style={{  justifyContent: "space-between", alignItems: "center" }}>
-        <Text style={{ fontSize: 14, color: "#1A1410" }}>{label}</Text>
-        {!editing ? (
-          <View style={{  alignItems: "center", gap: 10 }}>
-            <Text style={{ fontSize: 13, color: colors.muted }}>{value}</Text>
-            <Pressable onPress={onEdit} style={{ backgroundColor: "none", borderWidth: 0, cursor: "pointer" }}>
-              <Text style={{fontSize: 13, color: colors.primary, fontWeight: 600, fontFamily: "'Outfit', sans-serif"}}>Edit</Text>
-            </Pressable>
-          </View>
-        ) : (
-          <Pressable onPress={onDone} style={{ backgroundColor: "none", borderWidth: 0, cursor: "pointer" }}>
-            <Text style={{fontSize: 13, color: colors.accent, fontWeight: 600, fontFamily: "'Outfit', sans-serif"}}>Done</Text>
-          </Pressable>
-        )}
-      </View>
-      {editing && (
-        <TextInput
-          value={value}
-          onChangeText={onChange}
-          autoFocus
-          style={{ width: "100%", backgroundColor: colors.bg, borderWidth: 1, borderColor: colors.border, borderRadius: 10, paddingTop: 10, paddingBottom: 10, paddingLeft: 12, paddingRight: 12, fontSize: 14, color: "#1A1410", fontFamily: "'Outfit', sans-serif", boxSizing: "border-box", marginTop: 10 }}
-        />
-      )}
-    </View>
-  );
-}

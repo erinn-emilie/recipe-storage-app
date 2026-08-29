@@ -10,6 +10,7 @@ import MemoriesScreen from "./screens/MemoriesScreen";
 import AddRecipeScreen from "./screens/AddRecipeScreen";
 import { Recipe, recipes as initialRecipes } from "./data/recipes";
 import { ThemeProvider, useTheme } from "./theme/ThemeContext";
+import { AccountProvider } from "./theme/AccountContext";
 
 
 export type Screen =
@@ -24,7 +25,9 @@ export type Screen =
 export default function App() {
   return (
     <ThemeProvider>
-      <AppInner />
+      <AccountProvider>
+        <AppInner />
+      </AccountProvider>
     </ThemeProvider>
   );
 }

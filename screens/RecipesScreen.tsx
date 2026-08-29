@@ -68,13 +68,6 @@ export default function RecipesScreen({ recipes, onSelect, onAdd }: Props) {
   );
 }
 
-function ListIcon({ color }: { color: string }) {
-  return <Svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={2}><Line x1="8" y1="6" x2="21" y2="6"/><Line x1="8" y1="12" x2="21" y2="12"/><Line x1="8" y1="18" x2="21" y2="18"/><Line x1="3" y1="6" x2="3.01" y2="6"/><Line x1="3" y1="12" x2="3.01" y2="12"/><Line x1="3" y1="18" x2="3.01" y2="18"/></Svg>;
-}
-function GridIcon({ color }: { color: string }) {
-  return <Svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={2}><Rect x="3" y="3" width="7" height="7"/><Rect x="14" y="3" width="7" height="7"/><Rect x="3" y="14" width="7" height="7"/><Rect x="14" y="14" width="7" height="7"/></Svg>;
-}
-
 function SearchIcon() {
   return <Svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FAF7F2" strokeWidth={2.5}><Line x1="12" y1="5" x2="12" y2="19"/><Line x1="5" y1="12" x2="19" y2="12"/></Svg>;
 }
