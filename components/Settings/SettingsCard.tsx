@@ -1,5 +1,5 @@
-import { useTheme } from "../../theme/ThemeContext";
-import { useAccount } from "../../theme/AccountContext";
+import { useTheme } from "../../context/ThemeContext";
+import { useAccount } from "../../context/AccountContext";
 import { useState } from "react"
 import { View, Pressable, Text } from "react-native";
 
@@ -15,7 +15,7 @@ import LogInCard from "./LogInCard";
 
 export default function SettingsCard() {
   const { colors } = useTheme();
-  const { loggedInStatus, username, email} = useAccount();
+  const { loggedInStatus, username, email, signOut} = useAccount();
   const [ showSignUp, setShowSignUp ] = useState(true)
 
   return (
@@ -60,7 +60,7 @@ export default function SettingsCard() {
 
           <Text style={{ marginTop: 20, marginBottom: 6, fontSize: 11, color: colors.muted, letterSpacing: 1.4, textTransform: "uppercase", fontWeight: 600 }}>Actions</Text> 
           <View style={{ backgroundColor: "#FFFFFF", borderRadius: 16, paddingTop: 4, paddingBottom: 4, paddingLeft: 16, paddingRight: 16, borderWidth: 1, borderColor: colors.border }}>
-            <Pressable style={{ width: "100%", backgroundColor: "none", borderWidth: 0, paddingTop: 12, paddingBottom: 12, cursor: "pointer"}}>
+            <Pressable onPress={signOut} style={{ width: "100%", backgroundColor: "none", borderWidth: 0, paddingTop: 12, paddingBottom: 12, cursor: "pointer"}}>
               <Text style={{textAlign: "left", fontSize: 14, color: colors.accent, fontWeight: 500, fontFamily: "'Outfit', sans-serif" }}>Sign Out</Text>
             </Pressable>
             <View style={{ height: 1, backgroundColor: colors.border, marginLeft: -16, marginRight: -16 }} />            

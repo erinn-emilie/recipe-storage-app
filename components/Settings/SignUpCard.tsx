@@ -1,5 +1,5 @@
-import { useTheme } from "../../theme/ThemeContext";
-import { useAccount } from "../../theme/AccountContext";
+import { useTheme } from "../../context/ThemeContext";
+import { useAccount } from "../../context/AccountContext";
 import { useState, useEffect } from "react";
 import { View, Pressable, Text, TextInput } from "react-native";
 
@@ -9,6 +9,7 @@ export default function SignUpCard() {
     const { colors } = useTheme();
     const { setLoggedInStatus, setAccountId, setEmail, setFriendCode, setUsername} = useAccount();
 
+    const apiUrl = "http://192.168.4.119:5000"
 
     const [signUpError, setSignUpError] = useState<string>("");
     const [newUsername, setNewUsername] = useState<string>("");
@@ -19,6 +20,7 @@ export default function SignUpCard() {
 
     useEffect(() => {
         if(readyToCreateUser){
+            const url = `${apiUrl}/create-new-user`
             fetch(url, {
                 method: "POST",
                 headers: {

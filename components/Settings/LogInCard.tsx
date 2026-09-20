@@ -1,5 +1,5 @@
-import { useTheme } from "../../theme/ThemeContext";
-import { useAccount } from "../../theme/AccountContext";
+import { useTheme } from "../../context/ThemeContext";
+import { useAccount } from "../../context/AccountContext";
 import { useState, useEffect } from "react";
 import { View, Pressable, Text, TextInput } from "react-native";
 
@@ -9,6 +9,7 @@ export default function SignUpCard() {
     const { colors } = useTheme();
     const { setLoggedInStatus, setAccountId, setEmail, setFriendCode, setUsername} = useAccount();
 
+    const apiUrl = "http://192.168.4.119:5000"
 
     const [logInError, setLogInError] = useState<string>("");
     const [posUsername, setPosUsername] = useState<string>("");
@@ -17,6 +18,7 @@ export default function SignUpCard() {
 
     useEffect(() => {
         if(readyToFindUser){
+            const url = `${apiUrl}/find-existing-user`
             fetch(url, {
                 method: "POST",
                 headers: {

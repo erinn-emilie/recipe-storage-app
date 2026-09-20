@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Recipe } from "../data/recipes";
 import StarRating from "../components/StarRating";
-import { useTheme } from "../theme/ThemeContext";
+import { useTheme } from "../context/ThemeContext";
 import { ScrollView, View, Pressable, Text, TextInput, Image } from "react-native";
 import Svg, { Path, Line, Circle, Rect, Polygon } from "react-native-svg";
 

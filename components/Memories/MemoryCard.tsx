@@ -1,20 +1,8 @@
 import { useState } from "react";
-import StarRating from "../components/StarRating";
-import { useTheme } from "../theme/ThemeContext";
+import StarRating from "../../components/StarRating";
+import { useTheme } from "../../context/ThemeContext";
+import { Memory } from "../../context/MemoryContext";
 import { View, Pressable, Text, Image } from "react-native";
-
-interface Memory {
-  id: string;
-  title: string;
-  date: string;
-  chef: string;
-  image: string;
-  notes: string;
-  rating: number;
-  friendRatings: { name: string; rating: number }[];
-}
-
-
 
 export default function MemoryCard({memory}: {memory:Memory}) {
     const [expanded, setExpanded] = useState<string | null>(null);
@@ -32,7 +20,7 @@ export default function MemoryCard({memory}: {memory:Memory}) {
                 <View style={{ position: "absolute", bottom: 12, left: 14, right: 14,  justifyContent: "space-between", alignItems: "flex-end" }}>
                     <View>
                         <Text style={{ margin: 0, fontSize: 17, fontFamily: "'Fraunces', serif", fontWeight: 400, color: "#FFFFFF" }}>{memory.title}</Text>
-                        <Text style={{ marginTop: 2, fontSize: 11, color: "rgba(250,247,242,0.8)" }}>{memory.date} · Chef: {memory.chef}</Text>
+                        <Text style={{ marginTop: 2, fontSize: 11, color: "rgba(250,247,242,0.8)" }}>{memory.date.toString()} · Chef: {memory.chef}</Text>
                     </View>
                     <StarRating rating={memory.rating} size={13} />
                 </View>

@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { useTheme, THEMES, ThemeId } from "../../theme/ThemeContext";
-import { useAccount } from "../../theme/AccountContext";
+import { useTheme, THEMES, ThemeId } from "../../context/ThemeContext";
+import { useAccount } from "../../context/AccountContext";
 import { View, Pressable, Text, TextInput } from "react-native";
 import Svg, { Path, Line, Polyline, Circle } from "react-native-svg";
 

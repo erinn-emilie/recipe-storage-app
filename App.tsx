@@ -8,9 +8,13 @@ import PantryScreen from "./screens/PantryScreen";
 import FriendsScreen from "./screens/FriendsScreen";
 import MemoriesScreen from "./screens/MemoriesScreen";
 import AddRecipeScreen from "./screens/AddRecipeScreen";
-import { Recipe, recipes as initialRecipes } from "./data/recipes";
-import { ThemeProvider, useTheme } from "./theme/ThemeContext";
-import { AccountProvider } from "./theme/AccountContext";
+import { ThemeProvider, useTheme } from "./context/ThemeContext";
+import { AccountProvider } from "./context/AccountContext";
+import { RecipesProvider, useRecipes, Recipe } from "./context/RecipeContext";
+import { PantryProvider } from "./context/PantryContext";
+import { MemoryProvider } from "./context/MemoryContext";
+import { GroceryProvider } from "./context/GroceryContext";
+import { MealPlanProvider } from "./context/MealPlanContext";
 
 
 export type Screen =
@@ -26,7 +30,17 @@ export default function App() {
   return (
     <ThemeProvider>
       <AccountProvider>
-        <AppInner />
+        <RecipesProvider>
+          <PantryProvider>
+            <GroceryProvider>
+              <MemoryProvider>
+                <MealPlanProvider>
+                  <AppInner/>
+                </MealPlanProvider>
+              </MemoryProvider>
+            </GroceryProvider>
+          </PantryProvider>
+        </RecipesProvider>
       </AccountProvider>
     </ThemeProvider>
   );
@@ -37,7 +51,7 @@ function AppInner() {
   const [screen, setScreen] = useState<Screen>("recipes");
   const [activeTab, setActiveTab] = useState<"recipes" | "planner" | "pantry" | "friends" | "memories">("recipes");
   const [selectedRecipe, setSelectedRecipe] = useState<Recipe | null>(null);
-  const [recipes, setRecipes] = useState<Recipe[]>(initialRecipes);
+  const { allRecipes, setAllRecipes } = useRecipes()
 
   const navigate = (s: Screen, recipe?: Recipe) => {
     if (recipe) setSelectedRecipe(recipe);
@@ -47,8 +61,7 @@ function AppInner() {
     }
   };
 
-  const addRecipe = (r: Recipe) => {
-    setRecipes((prev) => [r, ...prev]);
+  const addRecipe = () => {
     navigate("recipes");
   };
 
@@ -58,14 +71,14 @@ function AppInner() {
     <View style={{ flex: 1, backgroundColor: colors.bg }}>
       <ScrollView style={{ flex: 1}} contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={true}>
         {screen === "recipes" && (
-          <RecipesScreen recipes={recipes} onSelect={(r) => navigate("recipe-detail", r)} onAdd={() => navigate("add-recipe")} />
+          <RecipesScreen recipes={allRecipes} onSelect={(r) => navigate("recipe-detail", r)} onAdd={() => navigate("add-recipe")} />
         )}
         {screen === "recipe-detail" && selectedRecipe && (
           <RecipeDetailScreen recipe={selectedRecipe} onBack={() => navigate("recipes")} />
         )}
-        {screen === "planner" && <PlannerScreen recipes={recipes} />}
+        {screen === "planner" && <PlannerScreen recipes={allRecipes} />}
         {screen === "pantry" && <PantryScreen />}
-        {screen === "friends" && <FriendsScreen recipes={recipes} onSelectRecipe={(r) => navigate("recipe-detail", r)} />}
+        {screen === "friends" && <FriendsScreen recipes={allRecipes} onSelectRecipe={(r) => navigate("recipe-detail", r)} />}
         {screen === "memories" && <MemoriesScreen />}
         {screen === "add-recipe" && <AddRecipeScreen onAdd={addRecipe} onBack={() => navigate("recipes")} />}
       </ScrollView>

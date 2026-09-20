@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useTheme, THEMES, ThemeId } from "../theme/ThemeContext";
+import { useTheme, THEMES, ThemeId } from "../context/ThemeContext";
 import { View, Text, Pressable, TextInput } from "react-native";
 
 

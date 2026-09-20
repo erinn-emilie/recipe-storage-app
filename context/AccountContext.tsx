@@ -12,6 +12,7 @@ interface AccountCtx {
   setFriendCode: (friendCode: string) => void;
   loggedInStatus: boolean;
   setLoggedInStatus: (loggedInStatus: boolean) => void;
+  signOut: () => void;
 }
 
 
@@ -27,7 +28,8 @@ const AccountContext = createContext<AccountCtx>({
   friendCode: "",
   setFriendCode: () => {},
   loggedInStatus: false,
-  setLoggedInStatus: () => {}
+  setLoggedInStatus: () => {},
+  signOut: () => {}
 });
 
 export function AccountProvider({ children }: { children: React.ReactNode }) {
@@ -36,6 +38,19 @@ export function AccountProvider({ children }: { children: React.ReactNode }) {
   const [email, setEmail] = useState<string>("");
   const [friendCode, setFriendCode] = useState<string>("");
   const [loggedInStatus, setLoggedInStatus] = useState<boolean>(false)
+
+  const signOut = async () => {
+    await AsyncStorage.removeItem("username")
+    await AsyncStorage.removeItem("accountId")    
+    await AsyncStorage.removeItem("email")
+    await AsyncStorage.removeItem("friendCode")
+    await AsyncStorage.removeItem("loggedInStatus")
+    setAccountId("")
+    setUsername("")
+    setEmail("")
+    setFriendCode("")
+    setLoggedInStatus(false)
+  }
 
   useEffect(() => {
     const SyncAccountInfo = async () => {
@@ -80,7 +95,7 @@ export function AccountProvider({ children }: { children: React.ReactNode }) {
 
 
   return (
-    <AccountContext.Provider value={{ accountId, setAccountId, username, setUsername, email, setEmail, friendCode, setFriendCode, loggedInStatus, setLoggedInStatus }}>
+    <AccountContext.Provider value={{ accountId, setAccountId, username, setUsername, email, setEmail, friendCode, setFriendCode, loggedInStatus, setLoggedInStatus, signOut }}>
       {children}
     </AccountContext.Provider>
   );
