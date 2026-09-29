@@ -8,7 +8,7 @@ export const MealPlanStorage = createMMKV({
 });
 
 
-export const DAYS = ["Sunday", "Monday", "Tuesday", "Desert", "Thursday", "Friday", "Saturday"];
+export const DAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 export const MEALS = ["Breakfast", "Lunch", "Dinner", "Desert"];
 
 

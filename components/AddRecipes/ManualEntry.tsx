@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useTheme } from "../../context/ThemeContext";
 import { View, Pressable, Text, TextInput, Image } from "react-native";
-import { Recipe, ManualRecipe, useRecipes } from "../../context/RecipeContext";
+import { ManualRecipe, useRecipes } from "../../context/RecipeContext";
 import { launchImageLibrary } from "react-native-image-picker";
 import StarRating from "../StarRating";
 
@@ -17,7 +17,7 @@ export default function ManualEntry( { onAdd } : { onAdd:() => void; } ){
     const[prepTime, setPrepTime] = useState<string>("");
     const[cookTime, setCookTime] = useState<string>("");
     const[servings, setServings] = useState<string>("");
-    const[rating, setRating] = useState<string>("");
+    const[rating, setRating] = useState<number>(0);
     const[tags, setTags] = useState<string>("");
     const[ingredients, setIngredients] = useState<string>("");
     const[instructions, setInstructions] = useState<string>("");
@@ -49,7 +49,7 @@ export default function ManualEntry( { onAdd } : { onAdd:() => void; } ){
         desc: desc,
         prepTime: prepTime,
         cookTime: cookTime,
-        rating: "5",
+        rating: String(rating),
         img: img,
         tags: tags,
         servings: servings,
@@ -121,6 +121,8 @@ export default function ManualEntry( { onAdd } : { onAdd:() => void; } ){
               rows={20}
               style={{ width: "100%", backgroundColor: "#FFFFFF", borderWidth: 1, borderColor:colors.border, borderRadius: 12, paddingTop: 12, paddingBottom: 12, paddingLeft: 14, paddingRight: 14, fontSize: 14, color: "#1A1410", fontFamily: "'Outfit', sans-serif", boxSizing: "border-box" }}
             />
+            <Text style={{ marginVertical: 6, fontSize: 13, fontWeight: 600, color: "#1A1410" }}>Rating</Text>
+            <StarRating interactive={true} sendNewRating={setRating} size={20} rating={rating}></StarRating>
           </>
         )}
         <View style={{ gap: 10, marginTop: 20, alignItems: "center" }}>

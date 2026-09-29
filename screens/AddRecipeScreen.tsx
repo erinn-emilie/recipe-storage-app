@@ -35,7 +35,7 @@ export default function AddRecipeScreen({ onAdd, onBack }: Props) {
           <View style={{ flexDirection: "column", gap: 12 }}>
             <Pressable
               onPress={() => setMode("url")}
-              style={{ backgroundColor: colors.primary, borderWidth:0, paddingTop: 18, paddingBottom: 18, paddingLeft: 20, paddingRight: 20, alignItems: "center", gap: 14, cursor: "pointer"}}
+              style={{ borderRadius: 16, backgroundColor: colors.primary, borderWidth:0, paddingTop: 18, paddingBottom: 18, paddingLeft: 20, paddingRight: 20, alignItems: "center", gap: 14, cursor: "pointer"}}
             >
               <View style={{ width: 44, height: 44, borderRadius: 12, backgroundColor: "rgba(250,247,242,0.15)", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
                 <Svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FAF7F2" strokeWidth={2}><Path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><Path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></Svg>
@@ -50,7 +50,7 @@ export default function AddRecipeScreen({ onAdd, onBack }: Props) {
               style={{ backgroundColor: "#FFFFFF", borderWidth: 1, borderColor: colors.border, borderRadius: 16, paddingTop: 18, paddingBottom: 18, paddingLeft: 20, paddingRight: 20, alignItems: "center", gap: 14, cursor: "pointer" }}
             >
               <View style={{ width: 44, height: 44, borderRadius: 12, backgroundColor: colors.primary, alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                <Svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={colors.primary} strokeWidth={2}><Path d="M12 20h9"/><Path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></Svg>
+                <Svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FAF7F2"  strokeWidth={2}><Path d="M12 20h9"/><Path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></Svg>
               </View>
               <View>
                 <Text style={{ marginTop: 0, marginBottom: 0, marginLeft: 0, marginRight: 0, fontSize: 16, fontWeight: 600, color: "#1A1410", fontFamily: "'Fraunces', serif" }}>Enter manually</Text>

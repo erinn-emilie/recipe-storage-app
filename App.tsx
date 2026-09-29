@@ -15,6 +15,7 @@ import { PantryProvider } from "./context/PantryContext";
 import { MemoryProvider } from "./context/MemoryContext";
 import { GroceryProvider } from "./context/GroceryContext";
 import { MealPlanProvider } from "./context/MealPlanContext";
+import { FriendProvider } from "./context/FriendContext";
 
 
 export type Screen =
@@ -35,7 +36,9 @@ export default function App() {
             <GroceryProvider>
               <MemoryProvider>
                 <MealPlanProvider>
-                  <AppInner/>
+                  <FriendProvider>
+                    <AppInner/>
+                  </FriendProvider>
                 </MealPlanProvider>
               </MemoryProvider>
             </GroceryProvider>
@@ -76,9 +79,9 @@ function AppInner() {
         {screen === "recipe-detail" && selectedRecipe && (
           <RecipeDetailScreen recipe={selectedRecipe} onBack={() => navigate("recipes")} />
         )}
-        {screen === "planner" && <PlannerScreen recipes={allRecipes} />}
+        {screen === "planner" && <PlannerScreen />}
         {screen === "pantry" && <PantryScreen />}
-        {screen === "friends" && <FriendsScreen recipes={allRecipes} onSelectRecipe={(r) => navigate("recipe-detail", r)} />}
+        {screen === "friends" && <FriendsScreen onSelectRecipe={(r) => navigate("recipe-detail", r)} />}
         {screen === "memories" && <MemoriesScreen />}
         {screen === "add-recipe" && <AddRecipeScreen onAdd={addRecipe} onBack={() => navigate("recipes")} />}
       </ScrollView>

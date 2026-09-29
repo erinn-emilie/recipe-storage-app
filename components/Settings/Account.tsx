@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useTheme, THEMES, ThemeId } from "../../context/ThemeContext";
+import { useTheme } from "../../context/ThemeContext";
 import { useAccount } from "../../context/AccountContext"
 import { View, Text, Pressable, TextInput } from "react-native";
 import EditableField from "../EditableField";
@@ -9,7 +9,7 @@ import EditableField from "../EditableField";
 
 export default function Account({}:{}){
     const { colors } = useTheme();
-    const { accountId, username, email, setAccountId, setUsername, setEmail } = useAccount();
+    const { username, email, setUsername, setEmail } = useAccount();
 
     const [editingField, setEditingField] = useState<string | null>(null);
     const [showPasswordForm, setShowPasswordForm] = useState(false);

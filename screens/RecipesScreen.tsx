@@ -2,8 +2,8 @@ import { useState } from "react";
 import RecipeCard from "../components/RecipeCard";
 import { useTheme } from "../context/ThemeContext";
 import { View, Pressable, Text, TextInput } from "react-native";
-import Svg, { Circle, Line, Path, Rect } from "react-native-svg";
-import { useRecipes, Recipe } from "../context/RecipeContext";
+import Svg, { Circle, Line, Path } from "react-native-svg";
+import { Recipe } from "../context/RecipeContext";
 
 
 interface Props {
@@ -14,7 +14,6 @@ interface Props {
 
 export default function RecipesScreen({ recipes, onSelect, onAdd }: Props) {
   const { colors } = useTheme();
-  const { saveRecipeError } = useRecipes();
   const [search, setSearch] = useState("");
 
   const filtered = recipes.filter((r) => {
@@ -50,11 +49,6 @@ export default function RecipesScreen({ recipes, onSelect, onAdd }: Props) {
             style={{ backgroundColor: "none", borderWidth: 0, flex: 1, fontSize: 14, color: "#1A1410", fontFamily: "'Outfit', sans-serif" }}
           />
       </View>
-      {(saveRecipeError != "") && (
-        <View style={{ flexDirection: "row" }}>
-          <Text style={{ color: "#ee3333" }}>{ saveRecipeError }</Text>
-        </View>
-      )}
       <View style={{  flexDirection: "column", gap: 10, paddingLeft: 20, paddingRight: 20, paddingTop: 20 }}>
         {filtered.map((r) => (
           <RecipeCard key={r.recipeId} recipe={r} onSelect={() => onSelect(r)} colors={colors} />

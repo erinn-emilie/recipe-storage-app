@@ -4,6 +4,8 @@ import StarRating from "./StarRating";
 
 export default function RecipeCard({ recipe, onSelect, colors }: { recipe: Recipe; onSelect: () => void; colors: any }) {
   const totalTime = Number(recipe.prepTime) + Number(recipe.cookTime);
+
+  console.log(recipe.img);
   return (
     <Pressable onPress={onSelect} style={{ backgroundColor: "#FFFFFF", borderRadius: 16, overflow: "hidden", cursor: "pointer", boxShadow: "0 1px 3px rgba(0,0,0,0.06)" }}>
       <View style={{ position: "relative", height: 110, backgroundColor: "#E8E0D5" }}>

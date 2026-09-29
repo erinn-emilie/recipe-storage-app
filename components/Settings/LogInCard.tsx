@@ -9,7 +9,7 @@ export default function SignUpCard() {
     const { colors } = useTheme();
     const { setLoggedInStatus, setAccountId, setEmail, setFriendCode, setUsername} = useAccount();
 
-    const apiUrl = "http://192.168.4.119:5000"
+    const apiUrl = "http://192.168.4.26:5000"
 
     const [logInError, setLogInError] = useState<string>("");
     const [posUsername, setPosUsername] = useState<string>("");
@@ -58,7 +58,7 @@ export default function SignUpCard() {
 
 
     return (
-        <View style={{ alignItems: "center", backgroundColor: "#FFFFFF", borderRadius: 16, paddingVertical: 20, paddingHorizontal: 16, borderWidth: 1, borderColor: colors.border }}>
+        <View style={{ alignItems: "center", backgroundColor: colors.bg, borderRadius: 16, paddingVertical: 20, paddingHorizontal: 16, borderWidth: 1, borderColor: colors.border }}>
             <View style={{ flexDirection: "row", alignItems: "center", paddingVertical: 5 }}>
                 <Text style={{ margin: 6, fontSize: 12, color: colors.muted, fontWeight: 500, letterSpacing: 0.3 }}>Username</Text>
                 <TextInput onChangeText={setPosUsername} style={{ width: "80%", backgroundColor: "#FFFFFF", borderWidth: 1, borderColor: colors.border, borderRadius: 12, paddingVertical: 11, paddingHorizontal: 14, fontSize: 14, color: "#1A1410", fontFamily: "Outfit"}}></TextInput>

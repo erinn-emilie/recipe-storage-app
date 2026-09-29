@@ -9,11 +9,19 @@ interface Props {
   rating: number;
   size?: number;
   interactive?: boolean;
+  sendNewRating?: (rating: number) => void; 
 }
 
-export default function StarRating({ rating, size = 14, interactive = false }: Props) {
+export default function StarRating({ rating, size = 14, interactive = false, sendNewRating = () => {} }: Props) {
   const { colors } = useTheme();
   const [newRating, setNewRating] = useState(rating)
+
+  function TrySetNewRating(rating: number){
+    setNewRating(rating);
+    if(interactive){
+      sendNewRating(rating);
+    }
+  }
 
   return (
     <View style={{ flexDirection: "row", gap: 2 }}>
@@ -21,7 +29,7 @@ export default function StarRating({ rating, size = 14, interactive = false }: P
         <Pressable
           key={i}
           disabled={!interactive}
-          onPress={() => setNewRating(i)}
+          onPress={() => TrySetNewRating(i)}
           style={({ pressed }) => ({
             opacity: pressed ? 0.6 : 1,
           })}

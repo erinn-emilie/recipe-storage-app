@@ -1,8 +1,6 @@
-import { useState } from "react";
 import { useTheme, THEMES, ThemeId } from "../../context/ThemeContext";
-import { useAccount } from "../../context/AccountContext";
-import { View, Pressable, Text, TextInput } from "react-native";
-import Svg, { Path, Line, Polyline, Circle } from "react-native-svg";
+import { View, Pressable, Text } from "react-native";
+import Svg, { Polyline } from "react-native-svg";
 
 
 
@@ -20,7 +18,7 @@ export default function Theme({}:{}) {
                   onPress={() => setThemeId(id)}
                   style={{ backgroundColor: t.colors.bg, borderWidth: 2, borderColor: themeId === id ? t.colors.primary : colors.border, borderRadius: 14, padding: 12, cursor: "pointer", position: "relative" }}
                 >
-                  <View style={{  gap: 5, marginBottom: 8 }}>
+                  <View style={{  flexDirection: "row", gap: 5, marginBottom: 8 }}>
                     {t.preview.map((color, i) => (
                       <View key={i} style={{ width: i === 0 ? 24 : 16, height: 24, borderRadius: 6, backgroundColor: color, borderWidth: 1, borderColor: "rgba(0,0,0,0.06)" }} />
                     ))}

@@ -38,6 +38,7 @@ export default function MealPlan(){
         <View style={{ paddingLeft: 20, paddingRight: 20 }}>
           {MEALS.map((meal) => {
             const r = mealPlan[activeDay][meal];
+            console.log(r.img)
             return (
               <View key={meal} style={{ marginBottom: 10 }}>
                 <Text style={{ marginBottom: 5, fontSize: 10, color: colors.muted, letterSpacing: 1.2, textTransform: "uppercase", fontWeight: 600 }}>{meal}</Text>
@@ -75,16 +76,20 @@ export default function MealPlan(){
               <Text style={{ color: "rgba(26,20,16,0.6)", fontSize: 20, fontWeight: 600, fontFamily: "'Outfit', sans-serif" }}>Pick A Recipe</Text>
 
             </View>
-            {allRecipes.map((r) => (
+            {allRecipes.map((r) => { 
+              console.log(r.img)
+              return (
               <Pressable key={r.recipeId} onPress={() => assignToMealPlan(picking.day, picking.meal, r)} style={{  gap: 12, paddingTop: 10, paddingBottom: 10, borderBottomWidth: 1, borderBottomColor: colors.border, alignItems: "center" }}>
-                <ScrollView style={{ width: 52, height: 48, borderRadius: 10, backgroundColor: "#E8E0D5", flexShrink: 0 }}>
-                  <Image src={r.img} alt={r.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-                </ScrollView>
+                {/* <ScrollView style={{ width: 52, height: 48, borderRadius: 10, backgroundColor: "#E8E0D5", flexShrink: 0 }}> */}
+                  <Image src={r.img} alt={r.title} style={{ width: "20%", height: "50%", objectFit: "cover" }} />
+                {/* </ScrollView> */}
                 <View>
                   <Text style={{ margin: 0, fontSize: 14, fontWeight: 500, color: "#1A1410", fontFamily: "'Fraunces', serif" }}>{r.title}</Text>
                 </View>
+
               </Pressable>
-            ))}
+            ) }
+            )}
           </ScrollView>
         </View>
       )}

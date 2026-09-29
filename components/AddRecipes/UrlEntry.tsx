@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useTheme } from "../../context/ThemeContext";
-import { useAccount } from "../../context/AccountContext";
 import { View, Pressable, Text, TextInput } from "react-native";
 import { useRecipes } from "../../context/RecipeContext";
 
@@ -12,7 +11,7 @@ export default function UrlEntry( { onAdd } : { onAdd:() => void; } ){
 
     const [url, setUrl] = useState<string>("");
 
-    const parse = async () => {
+    const parse = () => {
         ParseRecipeFromUrl(url); 
         onAdd();    
     }
@@ -37,9 +36,6 @@ export default function UrlEntry( { onAdd } : { onAdd:() => void; } ){
           >
             <Text style={{ color: "#FFFFFF", fontSize: 16, fontWeight: 600, fontFamily: "'Outfit', sans-serif" }}>Parse Recipe</Text>
           </Pressable>
-          {parseError && (
-            <Text style={{ color: "red", fontSize: 12, marginTop: 8 }}>{parseError}</Text>
-          )};
         </View>
     );
 }

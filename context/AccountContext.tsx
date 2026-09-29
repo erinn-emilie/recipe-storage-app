@@ -75,16 +75,20 @@ export function AccountProvider({ children }: { children: React.ReactNode }) {
 
 
   useEffect(() => {
+    
     const GetLocalAccountInfo = async () => {
       var userLoggedIn =  await AsyncStorage.getItem("loggedInStatus")
+      console.log(userLoggedIn)
       if(userLoggedIn == "true") {
         const username = await AsyncStorage.getItem("username") ?? ""
         const email = await AsyncStorage.getItem("email") ?? ""
         const friendCode = await AsyncStorage.getItem("friendCode") ?? ""
+        const accountId = String(await AsyncStorage.getItem("accountId") ?? -1)
         setUsername(username)
         setEmail(email)
         setFriendCode(friendCode)
         setLoggedInStatus(true)
+        setAccountId(accountId);
       }
       else {
         setLoggedInStatus(false)
